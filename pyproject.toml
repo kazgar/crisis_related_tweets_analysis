@@ -6,6 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "notebook>=7.4.7",
-    "polars>=1.35.1",
+    "pandas>=2.3.3",
     "pre-commit>=4.3.0",
 ]
