@@ -7,7 +7,7 @@ from constants import PROJECT_ROOT
 EN_DATA_PATH = PROJECT_ROOT / "data" / "all_data_en"
 
 
-def read_en_humanitarian_data(data_path: Path = EN_DATA_PATH):
+def read_en_humanitarian_data(data_path: Path = EN_DATA_PATH) -> tuple:
     """Reads English humanitarian data.
 
     Args:
@@ -39,7 +39,7 @@ def read_en_humanitarian_data(data_path: Path = EN_DATA_PATH):
     )
 
 
-def read_en_informativeness_data(data_path: Path = EN_DATA_PATH):
+def read_en_informativeness_data(data_path: Path = EN_DATA_PATH) -> tuple:
     """Reads English informativeness data.
 
     Args:
