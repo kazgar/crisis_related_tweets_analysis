@@ -9,6 +9,12 @@ wheels/
 # Virtual environments
 .venv
 
+# Exec scripts
+*.sh
+
+# Slurm output
+slurm.*
+
 # Data
 data/
 
