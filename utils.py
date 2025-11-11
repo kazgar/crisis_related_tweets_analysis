@@ -24,21 +24,23 @@ def read_en_humanitarian_data(
             test_df: pd.DataFrame
         )
     """
+    sep = "\t" if filetype == ".tsv" else ","
+
     humanitarian_train_df = pd.read_csv(
         EN_DATA_PATH / dataset / f"{basename}_train{filetype}",
-        sep="\t",
+        sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     humanitarian_dev_df = pd.read_csv(
         EN_DATA_PATH / dataset / f"{basename}_dev{filetype}",
-        sep="\t",
+        sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     humanitarian_test_df = pd.read_csv(
         EN_DATA_PATH / dataset / f"{basename}_test{filetype}",
-        sep="\t",
+        sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
@@ -69,22 +71,23 @@ def read_en_informativeness_data(
             test_df: pd.DataFrame
         )
     """
+    sep = "\t" if filetype == ".tsv" else ","
 
     informativeness_train_df = pd.read_csv(
         EN_DATA_PATH / dataset / f"{basename}_train{filetype}",
-        sep="\t",
+        sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     informativeness_dev_df = pd.read_csv(
         EN_DATA_PATH / dataset / f"{basename}_dev{filetype}",
-        sep="\t",
+        sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     informativeness_test_df = pd.read_csv(
         EN_DATA_PATH / dataset / f"{basename}_test{filetype}",
-        sep="\t",
+        sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
