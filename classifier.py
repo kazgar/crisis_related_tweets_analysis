@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 from transformers import AutoModel
 
@@ -11,13 +10,17 @@ class TweetClassifier(nn.Module):
         hidden_size = self.bert.config.hidden_size
 
         self.dropout = nn.Dropout(dropout)
-        self.classifier = nn.Linear(hidden_size, num_labels)
+        self.classifier = nn.Sequential(
+            nn.Linear(hidden_size, hidden_size // 2),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden_size // 2, num_labels),
+        )
 
     def forward(self, input_ids, attention_mask):
         outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
 
         pooled_output = outputs.last_hidden_state[:, 0]
-        pooled_output = self.dropout(pooled_output)
 
         logits = self.classifier(pooled_output)
 
