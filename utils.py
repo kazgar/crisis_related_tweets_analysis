@@ -1,17 +1,15 @@
-from pathlib import Path
-
 import pandas as pd
 
 from constants import PROJECT_ROOT
 
-EN_DATA_PATH = PROJECT_ROOT / "data" / "all_data_en"
+EN_DATA_PATH = PROJECT_ROOT / "data"
 
 
-def read_en_humanitarian_data(data_path: Path = EN_DATA_PATH) -> tuple:
+def read_en_humanitarian_data(dataset: str = "all_data_en") -> tuple:
     """Reads English humanitarian data.
 
     Args:
-        data_path (pathlib.Path): Path to the English dataset file. Defaults to EN_DATA_PATH.
+        dataset (str): Name of the English dataset file. Defaults to "all_data_en".
 
     Returns:
         (
@@ -23,13 +21,22 @@ def read_en_humanitarian_data(data_path: Path = EN_DATA_PATH) -> tuple:
     humanitarian_data = "crisis_consolidated_humanitarian_filtered_lang_en"
 
     humanitarian_train_df = pd.read_csv(
-        data_path / f"{humanitarian_data}_train.tsv", sep="\t", engine="python", on_bad_lines="skip"
+        EN_DATA_PATH / dataset / f"{humanitarian_data}_train.tsv",
+        sep="\t",
+        engine="python",
+        on_bad_lines="skip",
     )
     humanitarian_dev_df = pd.read_csv(
-        data_path / f"{humanitarian_data}_dev.tsv", sep="\t", engine="python", on_bad_lines="skip"
+        EN_DATA_PATH / dataset / f"{humanitarian_data}_dev.tsv",
+        sep="\t",
+        engine="python",
+        on_bad_lines="skip",
     )
     humanitarian_test_df = pd.read_csv(
-        data_path / f"{humanitarian_data}_test.tsv", sep="\t", engine="python", on_bad_lines="skip"
+        EN_DATA_PATH / dataset / f"{humanitarian_data}_test.tsv",
+        sep="\t",
+        engine="python",
+        on_bad_lines="skip",
     )
 
     return (
@@ -39,11 +46,11 @@ def read_en_humanitarian_data(data_path: Path = EN_DATA_PATH) -> tuple:
     )
 
 
-def read_en_informativeness_data(data_path: Path = EN_DATA_PATH) -> tuple:
+def read_en_informativeness_data(dataset: str = "all_data_en") -> tuple:
     """Reads English informativeness data.
 
     Args:
-        data_path (pathlib.Path): Path to the English dataset file. Defaults to EN_DATA_PATH.
+        dataset (str): Name of the English dataset file. Defaults to "all_data_en".
 
     Returns:
         (
@@ -55,19 +62,19 @@ def read_en_informativeness_data(data_path: Path = EN_DATA_PATH) -> tuple:
     informativeness_data = "crisis_consolidated_informativeness_filtered_lang_en"
 
     informativeness_train_df = pd.read_csv(
-        data_path / f"{informativeness_data}_train.tsv",
+        EN_DATA_PATH / dataset / f"{informativeness_data}_train.tsv",
         sep="\t",
         engine="python",
         on_bad_lines="skip",
     )
     informativeness_dev_df = pd.read_csv(
-        data_path / f"{informativeness_data}_dev.tsv",
+        EN_DATA_PATH / dataset / f"{informativeness_data}_dev.tsv",
         sep="\t",
         engine="python",
         on_bad_lines="skip",
     )
     informativeness_test_df = pd.read_csv(
-        data_path / f"{informativeness_data}_test.tsv",
+        EN_DATA_PATH / dataset / f"{informativeness_data}_test.tsv",
         sep="\t",
         engine="python",
         on_bad_lines="skip",
