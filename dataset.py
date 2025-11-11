@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 
 
 class TweetDataset(Dataset):
