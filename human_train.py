@@ -13,7 +13,7 @@ from utils import get_human_datasets, read_en_humanitarian_data
 HUMAN_RESULT_PATH = PROJECT_ROOT / "results" / "human_results"
 DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.mps.is_available() else "cpu"
 BATCH_SIZE = 64
-NUM_WORKERS = os.cpu_count()
+NUM_WORKERS = 1
 RANDOM_SEED = 42
 DROPOUT = 0.1
 NUM_EPOCHS = 5
