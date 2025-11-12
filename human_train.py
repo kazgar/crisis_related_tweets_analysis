@@ -16,7 +16,7 @@ BATCH_SIZE = 64
 NUM_WORKERS = 1
 RANDOM_SEED = 42
 DROPOUT = 0.1
-NUM_EPOCHS = 5
+NUM_EPOCHS = 1
 
 
 def main():
@@ -24,17 +24,17 @@ def main():
 
     human_temp_df, _, _ = read_en_humanitarian_data()
     NUM_LABELS = human_temp_df["class_label"].nunique()
-    train_dataset, dataset, dataset = get_human_datasets()
+    train_dataset, dev_dataset, test_dataset = get_human_datasets()
 
     torch.manual_seed(RANDOM_SEED)
     train_dataloader = DataLoader(
         train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS
     )
     dev_dataloader = DataLoader(
-        dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS
+        dev_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS
     )
     test_dataloader = DataLoader(
-        dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS
+        test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS
     )
 
     torch.manual_seed(RANDOM_SEED)
@@ -51,7 +51,7 @@ def main():
     model_dev_results = train(
         model=model,
         train_dataloader=train_dataloader,
-        test_dataloader=test_dataloader,
+        test_dataloader=dev_dataloader,
         optimizer=optimizer,
         loss_fn=loss_fn,
         device=DEVICE,
