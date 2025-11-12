@@ -16,7 +16,8 @@ BATCH_SIZE = 64
 NUM_WORKERS = 1
 RANDOM_SEED = 42
 DROPOUT = 0.1
-NUM_EPOCHS = 1
+NUM_EPOCHS = 10
+EXPERIMENT_NR = 1
 
 
 def main():
@@ -59,13 +60,13 @@ def main():
     )
     print("Training finished.")
 
-    RESULTS_PATH = HUMAN_RESULT_PATH / "exp_1" / "results"
+    RESULTS_PATH = HUMAN_RESULT_PATH / f"exp_{EXPERIMENT_NR}" / "results"
     os.makedirs(RESULTS_PATH, exist_ok=True)
     model_dev_results_df = pd.DataFrame(model_dev_results)
     model_dev_results_df.to_csv(RESULTS_PATH / "model_dev_results.csv")
     print("Results saved.")
 
-    MODEL_PATH = HUMAN_RESULT_PATH / "exp_1" / "models"
+    MODEL_PATH = HUMAN_RESULT_PATH / f"exp_{EXPERIMENT_NR}" / "models"
     os.makedirs(MODEL_PATH, exist_ok=True)
     MODEL_NAME = "human_classifier_01.pth"
     torch.save(obj=model.state_dict(), f=MODEL_PATH / MODEL_NAME)
