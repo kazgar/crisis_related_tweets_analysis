@@ -15,6 +15,9 @@ wheels/
 # Slurm output
 slurm.*
 
+# Results
+results/ 
+
 # Data
 data/
 
