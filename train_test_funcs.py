@@ -90,21 +90,9 @@ def train(
             f"test_acc: {test_acc:.3f}"
         )
 
-        results["train_loss"].append(
-            train_loss.item() if isinstance(train_loss, torch.Tensor) else train_loss
-        )
-        (
-            results["train_acc"].append(train_acc.item())
-            if isinstance(train_acc, torch.Tensor)
-            else train_acc
-        )
-        results["test_loss"].append(
-            test_loss.item() if isinstance(test_loss, torch.Tensor) else test_loss
-        )
-        (
-            results["test_acc"].append(test_acc.item())
-            if isinstance(test_acc, torch.Tensor)
-            else test_acc
-        )
+        results["train_loss"].append(train_loss)
+        results["train_acc"].append(train_acc)
+        results["test_loss"].append(test_loss)
+        results["test_acc"].append(test_acc)
 
     return results
