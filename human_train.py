@@ -16,8 +16,8 @@ BATCH_SIZE = 64
 NUM_WORKERS = 1
 RANDOM_SEED = 42
 DROPOUT = 0.1
-NUM_EPOCHS = 10
-EXPERIMENT_NR = 1
+NUM_EPOCHS = 50
+EXPERIMENT_NR = 2
 
 
 def main():
@@ -62,6 +62,7 @@ def main():
 
     RESULTS_PATH = HUMAN_RESULT_PATH / f"exp_{EXPERIMENT_NR}" / "results"
     os.makedirs(RESULTS_PATH, exist_ok=True)
+    print(model_dev_results)
     model_dev_results_df = pd.DataFrame(model_dev_results)
     model_dev_results_df.to_csv(RESULTS_PATH / "model_dev_results.csv")
     print("Results saved.")
