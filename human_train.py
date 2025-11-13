@@ -6,7 +6,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 from classifier import TweetClassifier
-from constants import PROJECT_ROOT
+from constants import EXPERIMENT_NR, PROJECT_ROOT
 from train_test_funcs import train
 from utils import get_human_datasets, read_en_humanitarian_data
 
@@ -17,7 +17,6 @@ NUM_WORKERS = 1
 RANDOM_SEED = 42
 DROPOUT = 0.1
 NUM_EPOCHS = 50
-EXPERIMENT_NR = 2
 
 
 def main():
@@ -42,8 +41,10 @@ def main():
     torch.manual_seed(RANDOM_SEED)
     torch.cuda.manual_seed(RANDOM_SEED)
 
-    loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    inverse_weights = train_dataset.get_inverse_weights().to(DEVICE)
+
+    loss_fn = nn.CrossEntropyLoss(weight=inverse_weights)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01)
 
     print("Training is about to start...")
     model_dev_results = train(
@@ -61,7 +62,7 @@ def main():
     os.makedirs(RESULTS_PATH, exist_ok=True)
     print(model_dev_results)
     model_dev_results_df = pd.DataFrame(model_dev_results)
-    model_dev_results_df.to_csv(RESULTS_PATH / "model_dev_results.csv")
+    model_dev_results_df.to_csv(RESULTS_PATH / "model_dev_results.csv", index=False)
     print("Results saved.")
 
     MODEL_PATH = HUMAN_RESULT_PATH / f"exp_{EXPERIMENT_NR}" / "models"
