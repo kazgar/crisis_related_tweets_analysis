@@ -44,7 +44,7 @@ def main():
     inverse_weights = train_dataset.get_inverse_weights().to(DEVICE)
 
     loss_fn = nn.CrossEntropyLoss(weight=inverse_weights)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01)
+    optimizer = torch.optim.Adam(model.parameters(), lr=2e-5)
 
     print("Training is about to start...")
     model_dev_results = train(
