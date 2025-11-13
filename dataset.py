@@ -13,7 +13,6 @@ class TweetDataset(Dataset):
         elif isinstance(csv_file, pd.DataFrame):
             self.tweet_data = csv_file
 
-        self.weighing = weighing
         self.texts = self.tweet_data["text"].tolist()
         self.labels = self.tweet_data["class_label"].tolist()
         self.tokenizer = AutoTokenizer.from_pretrained("vinai/bertweet-base", use_fast=True)
