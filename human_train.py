@@ -34,9 +34,6 @@ def main():
     dev_dataloader = DataLoader(
         dev_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS
     )
-    test_dataloader = DataLoader(
-        test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS
-    )
 
     torch.manual_seed(RANDOM_SEED)
     model = TweetClassifier(num_labels=NUM_LABELS, dropout=DROPOUT).to(DEVICE)
