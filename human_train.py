@@ -67,7 +67,7 @@ def main():
 
     MODEL_PATH = HUMAN_RESULT_PATH / f"exp_{EXPERIMENT_NR}" / "models"
     os.makedirs(MODEL_PATH, exist_ok=True)
-    MODEL_NAME = "human_classifier_01.pth"
+    MODEL_NAME = "human_classifier.pth"
     torch.save(obj=model.state_dict(), f=MODEL_PATH / MODEL_NAME)
     print("Model saved.")
 
