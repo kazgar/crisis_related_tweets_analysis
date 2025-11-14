@@ -1,3 +1,4 @@
+import constants as const
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -22,6 +23,10 @@ def train_step(
         y_pred = model(input_ids, attention_mask)
 
         loss = loss_fn(y_pred, labels)
+
+        l1_norm = sum(p.abs().sum() for p in model.parameters())
+        loss = loss + const.L1_LAMBDA * l1_norm
+
         train_loss += loss.item()
 
         optimizer.zero_grad()
