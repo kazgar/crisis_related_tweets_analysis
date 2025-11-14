@@ -2,7 +2,9 @@ from pathlib import Path
 
 import torch
 
-EXPERIMENT_NR = 1
+HUMAN_EXPERIMENT_NR = 2
+
+INFO_EXPERIMENT_NR = 1
 
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 DATA_PATH = PROJECT_ROOT / "data"

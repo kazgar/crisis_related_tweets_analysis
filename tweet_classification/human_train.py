@@ -49,14 +49,14 @@ def main():
     )
     print("Training finished.")
 
-    RESULTS_PATH = HUMAN_RESULT_PATH / f"exp_{const.EXPERIMENT_NR}"
+    RESULTS_PATH = HUMAN_RESULT_PATH / f"exp_{const.HUMAN_EXPERIMENT_NR}"
     os.makedirs(RESULTS_PATH, exist_ok=True)
     print(model_dev_results)
     model_dev_results_df = pd.DataFrame(model_dev_results)
     model_dev_results_df.to_csv(RESULTS_PATH / "model_dev_results.csv", index=False)
     print("Results saved.")
 
-    MODEL_PATH = HUMAN_RESULT_PATH / f"exp_{const.EXPERIMENT_NR}" / "models"
+    MODEL_PATH = HUMAN_RESULT_PATH / f"exp_{const.HUMAN_EXPERIMENT_NR}" / "models"
     os.makedirs(MODEL_PATH, exist_ok=True)
     MODEL_NAME = "human_classifier.pth"
     torch.save(obj=model.state_dict(), f=MODEL_PATH / MODEL_NAME)
