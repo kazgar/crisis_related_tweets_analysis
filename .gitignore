@@ -16,7 +16,10 @@ wheels/
 slurm.*
 
 # Results
-results/ 
+results/
+
+# Graphs
+graphs/
 
 # Data
 data/
