@@ -3,15 +3,16 @@ import os
 import constants as const
 import pandas as pd
 import torch
+from utils import get_human_datasets, read_en_humanitarian_data, set_seed
+
+set_seed(const.SEED)
+
 from classifier import TweetClassifier
 from torch import nn
 from torch.utils.data import DataLoader
 from train_test_funcs import train
-from utils import get_human_datasets, read_en_humanitarian_data, set_seed
 
 HUMAN_RESULT_PATH = const.RESULTS_PATH / "human_results"
-
-set_seed(const.SEED)
 
 
 def main():
