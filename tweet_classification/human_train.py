@@ -7,9 +7,11 @@ from classifier import TweetClassifier
 from torch import nn
 from torch.utils.data import DataLoader
 from train_test_funcs import train
-from utils import get_human_datasets, read_en_humanitarian_data
+from utils import get_human_datasets, read_en_humanitarian_data, set_seed
 
 HUMAN_RESULT_PATH = const.RESULTS_PATH / "human_results"
+
+set_seed(const.SEED)
 
 
 def main():
@@ -19,7 +21,6 @@ def main():
     NUM_LABELS = human_temp_df["class_label"].nunique()
     train_dataset, dev_dataset, test_dataset = get_human_datasets()
 
-    torch.manual_seed(const.SEED)
     train_dataloader = DataLoader(
         train_dataset, batch_size=const.BATCH_SIZE, shuffle=True, num_workers=const.NUM_WORKERS
     )
@@ -27,12 +28,8 @@ def main():
         dev_dataset, batch_size=const.BATCH_SIZE, shuffle=False, num_workers=const.NUM_WORKERS
     )
 
-    torch.manual_seed(const.SEED)
     model = TweetClassifier(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
     print(model)
-
-    torch.manual_seed(const.SEED)
-    torch.cuda.manual_seed(const.SEED)
 
     inverse_weights = train_dataset.get_inverse_weights().to(const.DEVICE)
 
