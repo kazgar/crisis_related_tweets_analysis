@@ -56,7 +56,7 @@ def main():
     model_dev_results_df.to_csv(RESULTS_PATH / "model_dev_results.csv", index=False)
     print("Results saved.")
 
-    MODEL_PATH = HUMAN_RESULT_PATH / f"exp_{const.HUMAN_EXPERIMENT_NR}" / "models"
+    MODEL_PATH = RESULTS_PATH / "models"
     os.makedirs(MODEL_PATH, exist_ok=True)
     MODEL_NAME = f"human_classifier_exp_{const.HUMAN_EXPERIMENT_NR}.pth"
     torch.save(obj=model.state_dict(), f=MODEL_PATH / MODEL_NAME)
