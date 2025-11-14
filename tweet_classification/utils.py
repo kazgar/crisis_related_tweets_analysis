@@ -1,4 +1,5 @@
 import random
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -16,14 +17,14 @@ def set_seed(seed):
 
 
 def read_en_humanitarian_data(
-    dataset: str = "all_data_en",
+    data_path: Path = EN_DATA_PATH,
     basename: str = "crisis_consolidated_humanitarian_filtered_lang_en",
     filetype: str = ".tsv",
 ) -> tuple:
     """Reads English humanitarian data.
 
     Args:
-        dataset (str): Name of the English dataset file. Defaults to "all_data_en".
+        data_path (Path): Path to the data directory.
         basename (str): Base name of the data files. Defaults to "crisis_consolidated_humanitarian_filtered_lang_en".
         filetype (str): Type of the data file. Defaults to ".tsv".
 
@@ -37,19 +38,19 @@ def read_en_humanitarian_data(
     sep = "\t" if filetype == ".tsv" else ","
 
     humanitarian_train_df = pd.read_csv(
-        EN_DATA_PATH / dataset / f"{basename}_train{filetype}",
+        data_path / f"{basename}_train{filetype}",
         sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     humanitarian_dev_df = pd.read_csv(
-        EN_DATA_PATH / dataset / f"{basename}_dev{filetype}",
+        data_path / f"{basename}_dev{filetype}",
         sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     humanitarian_test_df = pd.read_csv(
-        EN_DATA_PATH / dataset / f"{basename}_test{filetype}",
+        data_path / f"{basename}_test{filetype}",
         sep=sep,
         engine="python",
         on_bad_lines="skip",
@@ -63,14 +64,14 @@ def read_en_humanitarian_data(
 
 
 def read_en_informativeness_data(
-    dataset: str = "all_data_en",
+    data_path: Path = EN_DATA_PATH,
     basename: str = "crisis_consolidated_informativeness_filtered_lang_en",
     filetype: str = ".tsv",
 ) -> tuple:
     """Reads English informativeness data.
 
     Args:
-        dataset (str): Name of the English dataset file. Defaults to "all_data_en".
+        data_path (Path): Path to the data directory.
         basename (str): Base name of the data files. Defaults to "crisis_consolidated_informativeness_filtered_lang_en".
         filetype (str): Type of the data file. Defaults to ".tsv".
 
@@ -84,19 +85,19 @@ def read_en_informativeness_data(
     sep = "\t" if filetype == ".tsv" else ","
 
     informativeness_train_df = pd.read_csv(
-        EN_DATA_PATH / dataset / f"{basename}_train{filetype}",
+        data_path / f"{basename}_train{filetype}",
         sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     informativeness_dev_df = pd.read_csv(
-        EN_DATA_PATH / dataset / f"{basename}_dev{filetype}",
+        data_path / f"{basename}_dev{filetype}",
         sep=sep,
         engine="python",
         on_bad_lines="skip",
     )
     informativeness_test_df = pd.read_csv(
-        EN_DATA_PATH / dataset / f"{basename}_test{filetype}",
+        data_path / f"{basename}_test{filetype}",
         sep=sep,
         engine="python",
         on_bad_lines="skip",
@@ -119,7 +120,7 @@ def get_human_datasets():
         )
     """
     human_train_df, human_dev_df, human_test_df = read_en_humanitarian_data(
-        dataset=CLEAN_DATA_PATH, basename="human", filetype=".csv"
+        data_path=CLEAN_DATA_PATH, basename="human", filetype=".csv"
     )
 
     return (TweetDataset(human_train_df), TweetDataset(human_dev_df), TweetDataset(human_test_df))
@@ -135,7 +136,7 @@ def get_info_datasets():
         )
     """
     info_train_df, info_dev_df, info_test_df = read_en_informativeness_data(
-        dataset=CLEAN_DATA_PATH, basename="info", filetype=".csv"
+        data_path=CLEAN_DATA_PATH, basename="info", filetype=".csv"
     )
 
     return (TweetDataset(info_train_df), TweetDataset(info_dev_df), TweetDataset(info_test_df))
