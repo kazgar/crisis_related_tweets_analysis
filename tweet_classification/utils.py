@@ -1,7 +1,18 @@
-import pandas as pd
+import random
 
+import numpy as np
+import pandas as pd
+import torch
 from constants import CLEAN_DATA_PATH, EN_DATA_PATH, PROJECT_ROOT
 from dataset import TweetDataset
+
+
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 
 def read_en_humanitarian_data(
