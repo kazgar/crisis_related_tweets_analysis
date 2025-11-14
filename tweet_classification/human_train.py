@@ -58,7 +58,7 @@ def main():
     )
     print("Training finished.")
 
-    RESULTS_PATH = HUMAN_RESULT_PATH / f"exp_{EXPERIMENT_NR}" / "results"
+    RESULTS_PATH = HUMAN_RESULT_PATH / f"exp_{EXPERIMENT_NR}"
     os.makedirs(RESULTS_PATH, exist_ok=True)
     print(model_dev_results)
     model_dev_results_df = pd.DataFrame(model_dev_results)

@@ -1,10 +1,7 @@
 import pandas as pd
 
-from constants import PROJECT_ROOT
+from constants import CLEAN_DATA_PATH, EN_DATA_PATH, PROJECT_ROOT
 from dataset import TweetDataset
-
-EN_DATA_PATH = PROJECT_ROOT / "data"
-CLEAN_DATA_PATH = EN_DATA_PATH / "clean_en_data"
 
 
 def read_en_humanitarian_data(
