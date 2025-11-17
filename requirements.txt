@@ -40,6 +40,7 @@ ipython-pygments-lexers==1.1.1
 isoduration==20.11.0
 jedi==0.19.2
 jinja2==3.1.6
+joblib==1.5.2
 json5==0.12.1
 jsonpointer==3.0.0
 jsonschema==4.25.1
@@ -101,6 +102,8 @@ rfc3986-validator==0.1.1
 rfc3987-syntax==1.1.0
 rpds-py==0.28.0
 safetensors==0.6.2
+scikit-learn==1.7.2
+scipy==1.16.3
 send2trash==1.8.3
 setuptools==80.9.0
 six==1.17.0
@@ -109,6 +112,7 @@ soupsieve==2.8
 stack-data==0.6.3
 sympy==1.14.0
 terminado==0.18.1
+threadpoolctl==3.6.0
 tinycss2==1.4.0
 tokenizers==0.22.1
 torch==2.9.0
