@@ -1,4 +1,5 @@
 import constants as const
+import pandas as pd
 import torch
 import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
@@ -109,7 +110,7 @@ def train(
 
 def human_inference_eval(
     model: nn.Module, test_dataloader: DataLoader, loss_fn: nn.Module, device: torch.device | str
-) -> dict:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Evaluate a multiclass classification model and return metrics and predictions.
 
     Returns:
@@ -130,7 +131,7 @@ def human_inference_eval(
     total_loss = 0
 
     with torch.inference_mode():
-        for batch in test_dataloader:
+        for batch in tqdm(test_dataloader):
             input_ids = batch["input_ids"].to(device)
             attention_mask = batch["attention_mask"].to(device)
             labels = batch["labels"].to(device)
@@ -145,20 +146,34 @@ def human_inference_eval(
 
     avg_loss = total_loss / len(test_dataloader)
 
+    print("!!!!!!!")
+    print(all_labels)
+    print("!!!!!!!")
+    print(all_preds)
+    print("!!!!!!!")
+
     accuracy = accuracy_score(all_labels, all_preds)
     precision = precision_score(all_labels, all_preds, average="weighted", zero_division=0)
     recall = recall_score(all_labels, all_preds, average="weighted", zero_division=0)
     f1 = f1_score(all_labels, all_preds, average="weighted", zero_division=0)
 
-    return {
-        "loss": [avg_loss],
-        "accuracy": [accuracy],
-        "precision": [precision],
-        "recall": [recall],
-        "f1": [f1],
-        "predictions": all_preds,
-        "true_labels": all_labels,
-    }
+    return (
+        pd.DataFrame.from_dict(
+            {
+                "loss": [avg_loss],
+                "accuracy": [accuracy],
+                "precision": [precision],
+                "recall": [recall],
+                "f1": [f1],
+            }
+        ),
+        pd.DataFrame.from_dict(
+            {
+                "predictions": all_preds,
+                "true_labels": all_labels,
+            }
+        ),
+    )
 
 
 def info_inference_eval(
@@ -166,8 +181,7 @@ def info_inference_eval(
     test_dataloader: DataLoader,
     loss_fn: nn.Module,
     device: torch.device | str,
-    return_probs: bool = False,
-):
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Evaluate a binary classification model and return metrics and predictions.
 
     Args:
@@ -178,17 +192,16 @@ def info_inference_eval(
         return_probs: if True, returns predicted probabilities for the positive class
 
     Returns:
-        dict with loss, accuracy, precision, recall, f1, predictions, true_labels
+        tuple with two pd.DataFrames
     """
     model.eval()
 
     all_preds = []
     all_labels = []
-    all_probs = []
     total_loss = 0
 
     with torch.inference_mode():
-        for batch in test_dataloader:
+        for batch in tqdm(test_dataloader):
             input_ids = batch["input_ids"].to(device)
             attention_mask = batch["attention_mask"].to(device)
             labels = batch["labels"].to(device)
@@ -202,8 +215,6 @@ def info_inference_eval(
 
             all_labels.extend(labels.cpu().numpy())
             all_preds.extend(preds.cpu().numpy())
-            if return_probs:
-                all_probs.extend(probs.cpu().numpy())
 
     avg_loss = total_loss / len(test_dataloader)
     accuracy = accuracy_score(all_labels, all_preds)
@@ -211,20 +222,23 @@ def info_inference_eval(
     recall = recall_score(all_labels, all_preds, zero_division=0)
     f1 = f1_score(all_labels, all_preds, zero_division=0)
 
-    result = {
-        "loss": [avg_loss],
-        "accuracy": [accuracy],
-        "precision": [precision],
-        "recall": [recall],
-        "f1": [f1],
-        "predictions": all_preds,
-        "true_labels": all_labels,
-    }
-
-    if return_probs:
-        result["probabilities"] = all_probs
-
-    return result
+    return (
+        pd.DataFrame.from_dict(
+            {
+                "loss": [avg_loss],
+                "accuracy": [accuracy],
+                "precision": [precision],
+                "recall": [recall],
+                "f1": [f1],
+            }
+        ),
+        pd.DataFrame.from_dict(
+            {
+                "predictions": all_preds,
+                "true_labels": all_labels,
+            }
+        ),
+    )
 
 
 class FocalLoss(nn.Module):
