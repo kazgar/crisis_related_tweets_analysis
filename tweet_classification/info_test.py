@@ -6,7 +6,7 @@ from utils import get_info_datasets, read_en_informativeness_data, set_seed
 set_seed(const.SEED)
 
 from classifier import TweetClassifier
-from torch.utils.data import DataLoader, WeightedRandomSampler
+from torch.utils.data import DataLoader
 from train_test_funcs import FocalLoss, info_inference_eval
 
 INFO_RESULTS_PATH = const.RESULTS_PATH / "info_results" / f"exp_{const.INFO_EXPERIMENT_NR}"
