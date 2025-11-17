@@ -1,5 +1,6 @@
 import constants as const
 import torch
+import torch.nn.functional as F
 from torch import nn
 from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
@@ -103,3 +104,15 @@ def train(
         results["test_acc"].append(test_acc)
 
     return results
+
+
+class FocalLoss(nn.Module):
+    def __init__(self, alpha=None, gamma=2):
+        super().__init__()
+        self.alpha = alpha
+        self.gamma = gamma
+
+    def forward(self, logits, labels):
+        ce = F.cross_entropy(logits, labels, weight=self.alpha, reduction="none")
+        pt = torch.exp(-ce)
+        return ((1 - pt) ** self.gamma * ce).mean()

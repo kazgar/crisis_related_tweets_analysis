@@ -141,9 +141,3 @@ def get_info_datasets():
     )
 
     return (TweetDataset(info_train_df), TweetDataset(info_dev_df), TweetDataset(info_test_df))
-
-
-def focal_loss(logits, labels, alpha=None, gamma=2):
-    ce = cross_entropy(logits, labels, weight=alpha, reduction="none")
-    pt = torch.exp(-ce)
-    return ((1 - pt) ** gamma * ce).mean()
