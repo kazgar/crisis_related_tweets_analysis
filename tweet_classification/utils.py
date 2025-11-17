@@ -6,7 +6,6 @@ import pandas as pd
 import torch
 from constants import CLEAN_DATA_PATH, EN_DATA_PATH, PROJECT_ROOT
 from dataset import TweetDataset
-from torch.nn.functional import cross_entropy
 
 
 def set_seed(seed):
