@@ -51,7 +51,25 @@ To process raw datasets and prepare them for training, run: `notebooks/data_proc
 
 
 ---
+## Pretrained Models
 
+This project uses **BERTweet**, a pretrained language model for English tweets, for fine-tuning on humanitarian tweet classification tasks. The model is based on the following paper:
+
+```bibtex
+@inproceedings{
+   bertweet,
+   title = {{BERTweet: A pre-trained language model for English Tweets}},
+   author = {Dat Quoc Nguyen and Thanh Vu and Anh Tuan Nguyen},
+   booktitle = {Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations},
+   pages = {9--14},
+   year = {2020}
+}
+```
+
+The pretrained weights are available from the [Hugging Face model hub](https://huggingface.co/VinAI/BERTweet-base).
+
+
+---
 ## Training
 
 Training scripts are located in `tweet_classification/`:
