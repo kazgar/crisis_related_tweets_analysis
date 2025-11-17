@@ -3,8 +3,6 @@ import pandas as pd
 import torch
 from utils import get_human_datasets, read_en_humanitarian_data, set_seed
 
-from tweet_classification.constants import HUMAN_EXPERIMENT_NR
-
 set_seed(const.SEED)
 
 from classifier import TweetClassifier
@@ -40,7 +38,7 @@ def main():
         model=model, test_dataloader=test_dataloader, loss_fn=loss_fn, device=const.DEVICE
     )
 
-    infer_eval_df = pd.DataFrame({"test_loss": test_loss, "test_acc": test_acc})
+    infer_eval_df = pd.DataFrame({"test_loss": [test_loss], "test_acc": [test_acc]})
 
     infer_eval_df.to_csv(HUMAN_RESULTS_PATH / "infer_eval.csv", index=False)
 

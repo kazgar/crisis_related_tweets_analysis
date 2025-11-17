@@ -38,7 +38,7 @@ def main():
         model=model, test_dataloader=test_dataloader, loss_fn=loss_fn, device=const.DEVICE
     )
 
-    infer_eval_df = pd.DataFrame({"test_loss": test_loss, "test_acc": test_acc})
+    infer_eval_df = pd.DataFrame({"test_loss": [test_loss], "test_acc": [test_acc]})
 
     infer_eval_df.to_csv(INFO_RESULTS_PATH / "infer_eval.csv", index=False)
 
