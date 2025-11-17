@@ -2,7 +2,7 @@
 
 This project is focused on classifying tweets related to humanitarian crises. It provides pipelines for **multiclass classification** (tweet content categories) and **binary classification** (informativeness of tweets). It also includes tools for **data processing**, **training**, **inference**, and **visualization** of results.
 
-This project is only possible thanks to the [CrisisBench project](https://ojs.aaai.org/index.php/ICWSM/article/view/18115).
+This project is an extension of the [CrisisBench project](https://ojs.aaai.org/index.php/ICWSM/article/view/18115).
 
 ---
 
@@ -36,10 +36,11 @@ pip install -e .
 This project uses **two datasets**:
 
 1. **Multiclass tweet content classification**
-   Categories include: `donation_and_volunteering`, `requests_or_needs`, `sympathy_and_support`, etc.
+   Labels include: `donation_and_volunteering`, `requests_or_needs`, `sympathy_and_support`, etc.
 
 2. **Binary tweet informativeness classification**
    Labels: `informative` vs `not informative`.
+
 
 ### Getting the Data
 
@@ -47,7 +48,7 @@ This project uses **two datasets**:
 
 ### Processing the Data
 
-To process raw datasets and prepare them for training, run the `notebooks/data_processing.ipynb` notebook.
+To process raw datasets and prepare them for training, run: `notebooks/data_processing.ipynb`.
 
 
 ---
@@ -67,7 +68,7 @@ python -m tweet_classification.info_train
 ```
 
 
-All training constants (`DROPOUT`, `SEED`, `EPOCH_NUM`, `BATCH_SIZE`, etc.) can be found in `tweet_classification/constants.py`.
+All training constants (`DROPOUT`, `SEED`, `EPOCH_NUM`, `BATCH_SIZE`, etc.) can be found in `tweet_classification/constants.py`. They can adjusted based on preferences and/or needs.
 
 
 > `HUMAN_EXPERIMENT_NR` and `INFO_EXPERIMENT_NR` are used to track consecutive experiments and automatically save results in corresponding directories.
@@ -76,10 +77,8 @@ All training constants (`DROPOUT`, `SEED`, `EPOCH_NUM`, `BATCH_SIZE`, etc.) can 
 
 ## Visualizing Training Progress
 
-To visualize training metrics such as loss and accuracy, run:
-```console
-notebooks/plot_results.ipynb
-```
+To visualize training metrics such as loss and accuracy, run: `notebooks/plot_results.ipynb`.
+
 
 
 ---
@@ -101,10 +100,8 @@ python -m tweet_classification.info_test
 
 ## Visualizing Inference Performance
 
-To visualize predictions and confusion matrices, run:
-```console
-notebooks/visualize_inference.ipynb
-```
+To visualize predictions and confusion matrices, run: `notebooks/visualize_inference.ipynb`
+
 
 ---
 
