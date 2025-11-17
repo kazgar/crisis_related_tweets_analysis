@@ -3,13 +3,11 @@ import pandas as pd
 import torch
 from utils import get_human_datasets, read_en_humanitarian_data, set_seed
 
-from tweet_classification.train_test_funcs import human_inference_eval
-
 set_seed(const.SEED)
 
 from classifier import TweetClassifier
 from torch.utils.data import DataLoader, WeightedRandomSampler
-from train_test_funcs import FocalLoss, test_step
+from train_test_funcs import FocalLoss, human_inference_eval
 
 HUMAN_RESULTS_PATH = const.RESULTS_PATH / "human_results" / f"exp_{const.HUMAN_EXPERIMENT_NR}"
 
