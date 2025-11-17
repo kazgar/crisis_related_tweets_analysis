@@ -20,7 +20,7 @@ class TweetClassifier(nn.Module):
     def forward(self, input_ids, attention_mask):
         outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
 
-        pooled_output = outputs.last_hidden_state[:, 0]
+        pooled_output = self.dropout(outputs.last_hidden_state[:, 0])
 
         logits = self.classifier(pooled_output)
 
