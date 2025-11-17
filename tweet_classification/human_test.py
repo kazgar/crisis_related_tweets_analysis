@@ -3,6 +3,8 @@ import pandas as pd
 import torch
 from utils import get_human_datasets, read_en_humanitarian_data, set_seed
 
+from tweet_classification.train_test_funcs import human_inference_eval
+
 set_seed(const.SEED)
 
 from classifier import TweetClassifier
@@ -34,11 +36,11 @@ def main():
 
     loss_fn = FocalLoss()
 
-    test_loss, test_acc = test_step(
+    results = human_inference_eval(
         model=model, test_dataloader=test_dataloader, loss_fn=loss_fn, device=const.DEVICE
     )
 
-    infer_eval_df = pd.DataFrame({"test_loss": [test_loss], "test_acc": [test_acc]})
+    infer_eval_df = pd.DataFrame.from_dict(results)
 
     infer_eval_df.to_csv(HUMAN_RESULTS_PATH / "infer_eval.csv", index=False)
 
