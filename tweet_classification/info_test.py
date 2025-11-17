@@ -6,9 +6,8 @@ from utils import get_info_datasets, read_en_informativeness_data, set_seed
 set_seed(const.SEED)
 
 from classifier import TweetClassifier
-from torch import nn
 from torch.utils.data import DataLoader, WeightedRandomSampler
-from train_test_funcs import FocalLoss, test_step
+from train_test_funcs import FocalLoss, info_inference_eval
 
 INFO_RESULTS_PATH = const.RESULTS_PATH / "info_results" / f"exp_{const.INFO_EXPERIMENT_NR}"
 
@@ -34,11 +33,11 @@ def main():
 
     loss_fn = FocalLoss()
 
-    test_loss, test_acc = test_step(
+    results = info_inference_eval(
         model=model, test_dataloader=test_dataloader, loss_fn=loss_fn, device=const.DEVICE
     )
 
-    infer_eval_df = pd.DataFrame({"test_loss": [test_loss], "test_acc": [test_acc]})
+    infer_eval_df = pd.DataFrame.from_dict(results)
 
     infer_eval_df.to_csv(INFO_RESULTS_PATH / "infer_eval.csv", index=False)
 
