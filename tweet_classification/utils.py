@@ -6,6 +6,7 @@ import pandas as pd
 import torch
 from constants import CLEAN_DATA_PATH, EN_DATA_PATH, PROJECT_ROOT
 from dataset import TweetDataset
+from torch.nn.functional import cross_entropy
 
 
 def set_seed(seed):
@@ -140,3 +141,9 @@ def get_info_datasets():
     )
 
     return (TweetDataset(info_train_df), TweetDataset(info_dev_df), TweetDataset(info_test_df))
+
+
+def focal_loss(logits, labels, alpha=None, gamma=2):
+    ce = cross_entropy(logits, labels, weight=alpha, reduction="none")
+    pt = torch.exp(-ce)
+    return ((1 - pt) ** gamma * ce).mean()
