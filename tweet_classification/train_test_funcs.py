@@ -151,11 +151,11 @@ def human_inference_eval(
     f1 = f1_score(all_labels, all_preds, average="weighted", zero_division=0)
 
     return {
-        "loss": avg_loss,
-        "accuracy": accuracy,
-        "precision": precision,
-        "recall": recall,
-        "f1": f1,
+        "loss": [avg_loss],
+        "accuracy": [accuracy],
+        "precision": [precision],
+        "recall": [recall],
+        "f1": [f1],
         "predictions": all_preds,
         "true_labels": all_labels,
     }
@@ -212,11 +212,11 @@ def info_inference_eval(
     f1 = f1_score(all_labels, all_preds, zero_division=0)
 
     result = {
-        "loss": avg_loss,
-        "accuracy": accuracy,
-        "precision": precision,
-        "recall": recall,
-        "f1": f1,
+        "loss": [avg_loss],
+        "accuracy": [accuracy],
+        "precision": [precision],
+        "recall": [recall],
+        "f1": [f1],
         "predictions": all_preds,
         "true_labels": all_labels,
     }
