@@ -41,9 +41,6 @@ This project uses **two datasets**:
 2. **Binary tweet informativeness classification**
    Labels: `informative` vs `not informative`.
 
-
-### Getting the Data
-
 ### Getting the Data
 
 To obtain the datasets, please refer to the [Crisis Datasets Benchmarks repository](https://github.com/firojalam/crisis_datasets_benchmarks).
