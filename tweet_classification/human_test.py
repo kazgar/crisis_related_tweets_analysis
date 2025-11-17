@@ -33,13 +33,12 @@ def main():
 
     loss_fn = FocalLoss()
 
-    results = human_inference_eval(
+    metrics_df, preds_labels_df = human_inference_eval(
         model=model, test_dataloader=test_dataloader, loss_fn=loss_fn, device=const.DEVICE
     )
 
-    infer_eval_df = pd.DataFrame.from_dict(results)
-
-    infer_eval_df.to_csv(HUMAN_RESULTS_PATH / "infer_eval.csv", index=False)
+    metrics_df.to_csv(HUMAN_RESULTS_PATH / "performance_metrics.csv", index=False)
+    preds_labels_df.to_csv(HUMAN_RESULTS_PATH / "predictions.csv", index=False)
 
 
 if __name__ == "__main__":
