@@ -2,9 +2,9 @@ from pathlib import Path
 
 import torch
 
-HUMAN_EXPERIMENT_NR = 2
+HUMAN_EXPERIMENT_NR = 100
 
-INFO_EXPERIMENT_NR = 1
+INFO_EXPERIMENT_NR = 100
 
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 DATA_PATH = PROJECT_ROOT / "data"
@@ -17,7 +17,7 @@ L1_LAMBDA = 1e-4
 NUM_WORKERS = 1
 DROPOUT = 0.2
 SEED = 42
-NUM_EPOCHS = 50
+NUM_EPOCHS = 10
 BATCH_SIZE = 64
 DEVICE = (
     torch.device("cuda")
