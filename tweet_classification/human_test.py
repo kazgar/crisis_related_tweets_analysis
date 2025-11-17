@@ -8,7 +8,6 @@ from tweet_classification.train_test_funcs import human_inference_eval
 set_seed(const.SEED)
 
 from classifier import TweetClassifier
-from torch import nn
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from train_test_funcs import FocalLoss, test_step
 
