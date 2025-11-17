@@ -1,6 +1,7 @@
 import constants as const
 import torch
 import torch.nn.functional as F
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from torch import nn
 from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
@@ -104,6 +105,126 @@ def train(
         results["test_acc"].append(test_acc)
 
     return results
+
+
+def human_inference_eval(
+    model: nn.Module, test_dataloader: DataLoader, loss_fn: nn.Module, device: torch.device | str
+) -> dict:
+    """Evaluate a multiclass classification model and return metrics and predictions.
+
+    Returns:
+        dict: {
+            "loss": float,
+            "accuracy": float,
+            "precision": float,
+            "recall": float,
+            "f1": float,
+            "predictions": list,
+            "true_labels": list
+        }
+    """
+    model.eval()
+
+    all_preds = []
+    all_labels = []
+    total_loss = 0
+
+    with torch.inference_mode():
+        for batch in test_dataloader:
+            input_ids = batch["input_ids"].to(device)
+            attention_mask = batch["attention_mask"].to(device)
+            labels = batch["labels"].to(device)
+
+            logits = model(input_ids, attention_mask)
+            loss = loss_fn(logits, labels)
+            total_loss += loss.item()
+
+            preds = logits.argmax(dim=1)
+            all_preds.extend(preds.cput().numpy())
+            all_labels.extend(labels.cput().numpy())
+
+    avg_loss = total_loss / len(test_dataloader)
+
+    accuracy = accuracy_score(all_labels, all_preds)
+    precision = precision_score(all_labels, all_preds, average="weighted", zero_division=0)
+    recall = recall_score(all_labels, all_preds, average="weighted", zero_division=0)
+    f1 = f1_score(all_labels, all_preds, average="weighted", zero_division=0)
+
+    return {
+        "loss": avg_loss,
+        "accuracy": accuracy,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "predictions": all_preds,
+        "true_labels": all_labels,
+    }
+
+
+def info_inference_eval(
+    model: nn.Module,
+    test_dataloader: DataLoader,
+    loss_fn: nn.Module,
+    device: torch.device | str,
+    return_probs: bool = False,
+):
+    """Evaluate a binary classification model and return metrics and predictions.
+
+    Args:
+        model: nn.Module, trained model
+        test_dataloader: DataLoader
+        loss_fn: loss function
+        device: torch.device or str
+        return_probs: if True, returns predicted probabilities for the positive class
+
+    Returns:
+        dict with loss, accuracy, precision, recall, f1, predictions, true_labels
+    """
+    model.eval()
+
+    all_preds = []
+    all_labels = []
+    all_probs = []
+    total_loss = 0
+
+    with torch.inference_mode():
+        for batch in test_dataloader:
+            input_ids = batch["input_ids"].to(device)
+            attention_mask = batch["attention_mask"].to(device)
+            labels = batch["labels"].to(device)
+
+            logits = model(input_ids, attention_mask)
+            loss = loss_fn(logits.squeeze(), labels.float())
+            total_loss += loss.item()
+
+            probs = torch.sigmoid(logits).squeeze()
+            preds = (probs >= 0.5).long()
+
+            all_labels.extend(labels.cpu().numpy())
+            all_preds.extend(preds.cpu().numpy())
+            if return_probs:
+                all_probs.extend(probs.cpu().numpy())
+
+    avg_loss = total_loss / len(test_dataloader)
+    accuracy = accuracy_score(all_labels, all_preds)
+    precision = precision_score(all_labels, all_preds, zero_division=0)
+    recall = recall_score(all_labels, all_preds, zero_division=0)
+    f1 = f1_score(all_labels, all_preds, zero_division=0)
+
+    result = {
+        "loss": avg_loss,
+        "accuracy": accuracy,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "predictions": all_preds,
+        "true_labels": all_labels,
+    }
+
+    if return_probs:
+        result["probabilities"] = all_probs
+
+    return result
 
 
 class FocalLoss(nn.Module):
