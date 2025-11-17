@@ -140,8 +140,8 @@ def human_inference_eval(
             total_loss += loss.item()
 
             preds = logits.argmax(dim=1)
-            all_preds.extend(preds.cput().numpy())
-            all_labels.extend(labels.cput().numpy())
+            all_preds.extend(preds.cpu().numpy())
+            all_labels.extend(labels.cpu().numpy())
 
     avg_loss = total_loss / len(test_dataloader)
 
