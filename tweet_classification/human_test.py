@@ -27,8 +27,7 @@ def main():
     model = TweetClassifier(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
     model.load_state_dict(
         torch.load(
-            const.RESULTS_PATH
-            / "human_results"
+            HUMAN_RESULTS_PATH
             / f"exp_{const.HUMAN_EXPERIMENT_NR}"
             / "models"
             / f"human_classifier_exp_{const.HUMAN_EXPERIMENT_NR}.pth",
