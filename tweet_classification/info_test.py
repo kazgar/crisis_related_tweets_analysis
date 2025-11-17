@@ -10,7 +10,7 @@ from torch import nn
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from train_test_funcs import FocalLoss, test_step
 
-INFO_RESULTS_PATH = const.RESULTS_PATH / "info_results"
+INFO_RESULTS_PATH = const.RESULTS_PATH / "info_results" / f"exp_{const.INFO_EXPERIMENT_NR}"
 
 
 def main():
@@ -27,10 +27,7 @@ def main():
     model = TweetClassifier(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
     model.load_state_dict(
         torch.load(
-            INFO_RESULTS_PATH
-            / f"exp_{const.INFO_EXPERIMENT_NR}"
-            / "models"
-            / f"info_classifier_exp_{const.INFO_EXPERIMENT_NR}.pth",
+            INFO_RESULTS_PATH / "models" / f"info_classifier_exp_{const.INFO_EXPERIMENT_NR}.pth",
             map_location=const.DEVICE,
         )
     )
@@ -41,7 +38,9 @@ def main():
         model=model, test_dataloader=test_dataloader, loss_fn=loss_fn, device=const.DEVICE
     )
 
-    print(test_loss, test_acc)
+    infer_eval_df = pd.DataFrame({"test_loss": test_loss, "test_acc": test_acc})
+
+    infer_eval_df.to_csv(INFO_RESULTS_PATH / "infer_eval.csv", index=False)
 
 
 if __name__ == "__main__":
