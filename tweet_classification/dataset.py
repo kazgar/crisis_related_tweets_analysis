@@ -29,6 +29,15 @@ class TweetDataset(Dataset):
 
         return weights_tensor
 
+    def get_sample_weights(self):
+        label_counts = self.tweet_data["class_label"].value_counts().sort_index()
+
+        inverse_freqs = 1.0 / label_counts
+
+        sample_weights = self.tweet_data["class_label"].map(inverse_freqs)
+
+        return torch.tensor(sample_weights.values, dtype=torch.float)
+
     def __len__(self):
         return len(self.tweet_data)
 
