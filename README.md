@@ -44,7 +44,9 @@ This project uses **two datasets**:
 
 ### Getting the Data
 
-<!-- Fill this section with instructions on how to obtain or download the datasets -->
+### Getting the Data
+
+To obtain the datasets, please refer to the [Crisis Datasets Benchmarks repository](https://github.com/firojalam/crisis_datasets_benchmarks).
 
 ### Processing the Data
 
