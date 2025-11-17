@@ -1,4 +1,5 @@
 import constants as const
+import numpy as np
 import pandas as pd
 import torch
 import torch.nn.functional as F
@@ -146,12 +147,6 @@ def human_inference_eval(
 
     avg_loss = total_loss / len(test_dataloader)
 
-    print("!!!!!!!")
-    print(all_labels)
-    print("!!!!!!!")
-    print(all_preds)
-    print("!!!!!!!")
-
     accuracy = accuracy_score(all_labels, all_preds)
     precision = precision_score(all_labels, all_preds, average="weighted", zero_division=0)
     recall = recall_score(all_labels, all_preds, average="weighted", zero_division=0)
@@ -216,11 +211,13 @@ def info_inference_eval(
             all_labels.extend(labels.cpu().numpy())
             all_preds.extend(preds.cpu().numpy())
 
+    all_preds_indices = [np.argmax(pred) for pred in all_preds]
+
     avg_loss = total_loss / len(test_dataloader)
-    accuracy = accuracy_score(all_labels, all_preds)
-    precision = precision_score(all_labels, all_preds, zero_division=0)
-    recall = recall_score(all_labels, all_preds, zero_division=0)
-    f1 = f1_score(all_labels, all_preds, zero_division=0)
+    accuracy = accuracy_score(all_labels, all_preds_indices)
+    precision = precision_score(all_labels, all_preds_indices, zero_division=0)
+    recall = recall_score(all_labels, all_preds_indices, zero_division=0)
+    f1 = f1_score(all_labels, all_preds_indices, zero_division=0)
 
     return (
         pd.DataFrame.from_dict(
@@ -234,7 +231,7 @@ def info_inference_eval(
         ),
         pd.DataFrame.from_dict(
             {
-                "predictions": all_preds,
+                "predictions": all_preds_indices,
                 "true_labels": all_labels,
             }
         ),
