@@ -11,6 +11,7 @@ def train_step(
     loss_fn: torch.nn.Module,
     optimizer: torch.optim.Optimizer,
     device: torch.device | str,
+    l1_regularization: float | None = None,
 ) -> tuple:
     model.train()
     train_loss, train_acc = 0, 0
@@ -24,8 +25,9 @@ def train_step(
 
         loss = loss_fn(y_pred, labels)
 
-        l1_norm = sum(p.abs().sum() for p in model.parameters())
-        loss = loss + const.L1_LAMBDA * l1_norm
+        if l1_regularization:
+            l1_norm = sum(p.abs().sum() for p in model.parameters())
+            loss = loss + const.L1_LAMBDA * l1_norm
 
         train_loss += loss.item()
 
