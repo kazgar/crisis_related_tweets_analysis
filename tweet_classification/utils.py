@@ -4,8 +4,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
-from constants import CLEAN_DATA_PATH, EN_DATA_PATH, PROJECT_ROOT
-from dataset import TweetDataset
+
+from tweet_classification.constants import CLEAN_DATA_PATH, EN_DATA_PATH, PROJECT_ROOT
+from tweet_classification.dataset import TweetDataset
 
 
 def set_seed(seed):

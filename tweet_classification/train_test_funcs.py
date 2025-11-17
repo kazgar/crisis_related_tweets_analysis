@@ -1,4 +1,3 @@
-import constants as const
 import numpy as np
 import pandas as pd
 import torch
@@ -7,6 +6,8 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from torch import nn
 from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
+
+import tweet_classification.constants as const
 
 
 def train_step(

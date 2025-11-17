@@ -1,16 +1,22 @@
 import os
 
-import constants as const
 import pandas as pd
 import torch
-from utils import get_info_datasets, read_en_informativeness_data, set_seed
+
+import tweet_classification.constants as const
+from tweet_classification.utils import (
+    get_info_datasets,
+    read_en_informativeness_data,
+    set_seed,
+)
 
 set_seed(const.SEED)
 
-from classifier import TweetClassifier
 from torch import nn
 from torch.utils.data import DataLoader
-from train_test_funcs import train
+
+from tweet_classification.classifier import TweetClassifier
+from tweet_classification.train_test_funcs import train
 
 INFO_RESULT_PATH = const.RESULTS_PATH / "info_results"
 

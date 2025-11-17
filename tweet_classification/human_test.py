@@ -1,13 +1,18 @@
-import constants as const
-import pandas as pd
 import torch
-from utils import get_human_datasets, read_en_humanitarian_data, set_seed
+
+import tweet_classification.constants as const
+from tweet_classification.utils import (
+    get_human_datasets,
+    read_en_humanitarian_data,
+    set_seed,
+)
 
 set_seed(const.SEED)
 
-from classifier import TweetClassifier
 from torch.utils.data import DataLoader
-from train_test_funcs import FocalLoss, human_inference_eval
+
+from tweet_classification.classifier import TweetClassifier
+from tweet_classification.train_test_funcs import FocalLoss, human_inference_eval
 
 HUMAN_RESULTS_PATH = const.RESULTS_PATH / "human_results" / f"exp_{const.HUMAN_EXPERIMENT_NR}"
 
