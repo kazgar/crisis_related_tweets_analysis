@@ -2,7 +2,7 @@ import torch.nn as nn
 from transformers import AutoModel
 
 
-class TweetClassifier(nn.Module):
+class TweetClassifierMLP(nn.Module):
     def __init__(self, num_labels: int, dropout: float, model_name="vinai/bertweet-base"):
         super().__init__()
 

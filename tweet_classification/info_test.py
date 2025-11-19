@@ -11,7 +11,7 @@ set_seed(const.SEED)
 
 from torch.utils.data import DataLoader
 
-from tweet_classification.classifier import TweetClassifier
+from tweet_classification.classifier import TweetClassifierMLP
 from tweet_classification.train_test_funcs import FocalLoss, info_inference_eval
 
 INFO_RESULTS_PATH = const.RESULTS_PATH / "info_results" / f"exp_{const.INFO_EXPERIMENT_NR}"
@@ -28,7 +28,7 @@ def main():
         test_dataset, batch_size=const.BATCH_SIZE, shuffle=False, num_workers=const.NUM_WORKERS
     )
 
-    model = TweetClassifier(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
+    model = TweetClassifierMLP(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
     model.load_state_dict(
         torch.load(
             INFO_RESULTS_PATH / "models" / f"info_classifier_exp_{const.INFO_EXPERIMENT_NR}.pth",

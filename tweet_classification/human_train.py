@@ -12,7 +12,7 @@ from tweet_classification.utils import (
 
 set_seed(const.SEED)
 
-from classifier import TweetClassifier
+from classifier import TweetClassifierMLP
 from torch.utils.data import DataLoader, WeightedRandomSampler
 
 from tweet_classification.train_test_funcs import FocalLoss, train
@@ -39,7 +39,7 @@ def main():
         dev_dataset, batch_size=const.BATCH_SIZE, shuffle=False, num_workers=const.NUM_WORKERS
     )
 
-    model = TweetClassifier(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
+    model = TweetClassifierMLP(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
     print(model)
 
     loss_fn = FocalLoss()

@@ -15,7 +15,7 @@ set_seed(const.SEED)
 from torch import nn
 from torch.utils.data import DataLoader
 
-from tweet_classification.classifier import TweetClassifier
+from tweet_classification.classifier import TweetClassifierMLP
 from tweet_classification.train_test_funcs import train
 
 INFO_RESULT_PATH = const.RESULTS_PATH / "info_results"
@@ -35,7 +35,7 @@ def main():
         dev_dataset, batch_size=const.BATCH_SIZE, shuffle=False, num_workers=const.NUM_WORKERS
     )
 
-    model = TweetClassifier(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
+    model = TweetClassifierMLP(num_labels=NUM_LABELS, dropout=const.DROPOUT).to(const.DEVICE)
     print(model)
 
     inverse_weights = train_dataset.get_inverse_weights().to(const.DEVICE)
